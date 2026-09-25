@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+.env
+*.installed.plist
+.DS_Store
+*.log
+config/config.local.json
+config/config.json
+
+# Legacy machine-specific code-notify files kept only for local reference.
+launchd/com.local.claude-codex-usage-watch.plist
+scripts/code-notify-usage-watch.sh

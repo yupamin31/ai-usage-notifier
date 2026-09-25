@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "web": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 8791,
+    "refreshSeconds": 30
+  },
+  "app": {
+    "pollIntervalSeconds": 60,
+    "timeZone": "Asia/Tokyo",
+    "notifyOnStartup": true,
+    "stateDirectory": "~/Library/Application Support/CodexNotifier",
+    "logDirectory": "~/Library/Logs/CodexNotifier",
+    "logRetentionDays": 14,
+    "logMaxMegabytes": 10
+  },
+  "discord": {
+    "enabled": true,
+    "botTokenEnv": "DISCORD_BOT_TOKEN",
+    "channelIdEnv": "DISCORD_CHANNEL_ID",
+    "requestTimeoutSeconds": 10,
+    "maxRetries": 3
+  },
+  "notifications": {
+    "enabled": true,
+    "thresholdsEnabled": true,
+    "resetsEnabled": true,
+    "errorsEnabled": true,
+    "thresholds": [80, 90, 95],
+    "thresholdRearmMargin": 5,
+    "restoredUsedPercent": 1,
+    "minimumUsedBeforeRestore": 20,
+    "resetNotificationCooldownMinutes": 60,
+    "lateResetNotificationMinutes": 60,
+    "providerSettings": {
+      "claude": {
+        "enabled": true,
+        "thresholdsEnabled": true,
+        "resetsEnabled": true,
+        "errorsEnabled": true,
+        "thresholds": [80, 90, 95]
+      },
+      "codex": {
+        "enabled": true,
+        "thresholdsEnabled": true,
+        "resetsEnabled": true,
+        "errorsEnabled": true,
+        "thresholds": [80, 90, 95]
+      }
+    },
+    "templates": {
+      "threshold": "🔴 {provider} 使用量警告\n\n対象: {window}\n残り: {remainingPercent}%\n使用済み: {usedPercent}%\n\nリセットまで:\n{resetIn}\n\n時刻: {time}",
+      "reset": "🟢 {provider} 使用量リセット\n\n{window}制限がリセットされました\n\n残り: 100%\n\n時刻: {time}",
+      "weeklyReset": "🟢 {provider} 週間制限リセット\n\n週間制限がリセットされました\n\n残り: 100%\n\n時刻: {time}",
+      "unscheduledReset": "🎁 {provider} 臨時リセットの可能性\n\n対象: {window}\n予定時刻より前に使用量が回復し、次回リセット情報が更新されました。\nOpenAI・Anthropicなどサービス運営側の臨時リセットの可能性があります。\n\n残り: {remainingPercent}%\n次回リセット: {resetAt}\n\n時刻: {time}",
+      "test": "✅ {provider} 使用量通知テスト\n\nDiscord Botへの接続に成功しました。\n\n時刻: {time}",
+      "error": "⚠️ {provider} 監視エラー\n\n{error}\n\n時刻: {time}"
+    }
+  },
+  "providers": {
+    "codex": {
+      "enabled": true,
+      "displayName": "Codex",
+      "appServerCommand": "/opt/homebrew/bin/codex",
+      "requestTimeoutSeconds": 20,
+      "sessionFallbackMaxAgeMinutes": 1440,
+      "limitIds": ["codex"],
+      "sessionsDirectory": "~/.codex/sessions",
+      "lookbackDays": 14,
+      "initialTailKilobytes": 1024,
+      "maxReadKilobytesPerPoll": 4096,
+      "windowMappings": [
+        {
+          "id": "fiveHour",
+          "label": "5時間",
+          "minMinutes": 240,
+          "maxMinutes": 360
+        },
+        {
+          "id": "weekly",
+          "label": "週間",
+          "minMinutes": 9000,
+          "maxMinutes": 11000
+        }
+      ]
+    },
+    "claude": {
+      "enabled": true,
+      "displayName": "Claude",
+      "keychainService": "Claude Code-credentials",
+      "requestTimeoutSeconds": 20,
+      "authenticationErrorDelayMinutes": 5
+    },
+    "gemini": {
+      "enabled": false,
+      "displayName": "Gemini",
+      "sourceFile": "~/Library/Application Support/CodexNotifier/providers/gemini.json"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "codex-usage-notifier",
+  "version": "1.0.0",
+  "description": "Low-overhead macOS usage monitor for Codex with Discord notifications.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node scripts/clean.mjs",
+    "dev": "tsx watch src/index.ts --config config/config.json",
+    "start": "node dist/index.js --config config/config.json",
+    "once": "node dist/index.js --config config/config.json --once",
+    "status": "node dist/index.js --config config/config.json --once --dry-run --print-status",
+    "notify:test": "node dist/index.js --config config/config.json --test-discord",
+    "notify:reset-test": "node dist/index.js --config config/config.json --test-reset",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run format:check && npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "zod": "^4.0.14"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.32.0",
+    "@types/node": "^24.1.0",
+    "eslint": "^9.32.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.38.0",
+    "vitest": "^3.2.4"
+  }
+}
